@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # 1. Inference Engine (Micro-LLMs)
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    networks:
+      - agent-net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # 2. Database (State Management)
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: agent_admin
+      POSTGRES_PASSWORD: secure_password
+      POSTGRES_DB: agent_state
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - agent-net
+
+  # 3. Agent Orchestrator (LangGraph/FastAPI)
+  agent-server:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - DATABASE_URL=postgresql://agent_admin:secure_password@db:5432/agent_state
+    depends_on:
+      - ollama
+      - db
+    networks:
+      - agent-net
+
+networks:
+  agent-net:
+    driver: bridge
+
+volumes:
+  ollama_models:
+  pgdata:
