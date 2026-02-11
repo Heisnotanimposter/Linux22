@@ -10,6 +10,9 @@ import { AgentMonitor } from "@/components/widgets/AgentMonitor";
 import { SecurityShield } from "@/components/widgets/SecurityShield";
 import { DiagnosticsApp } from "@/components/apps/DiagnosticsApp";
 import { KernelOptimizer } from "@/components/apps/KernelOptimizer";
+import { ServerManager } from "@/components/apps/ServerManager";
+import { SemanticSearchApp } from "@/components/apps/SemanticSearch";
+import { GenerativeUIApp } from "@/components/apps/GenerativeUIApp";
 
 export const Membrane = () => {
     const { booted, isLoggedIn, isSleeping, isRebooting, performanceMode, processes, closeProcess, focusProcess, activeProcessId, wake } = useKernel();
@@ -159,6 +162,21 @@ const SynapseInput = () => {
             }
             if (lowerNav.includes("optimizer") || lowerNav.includes("kernel")) {
                 launchProcess("Kernel Optimizer", <KernelOptimizer />);
+                setInput("");
+                return;
+            }
+            if (lowerNav.includes("server") || lowerNav.includes("agent")) {
+                launchProcess("Server Manager", <ServerManager />);
+                setInput("");
+                return;
+            }
+            if (lowerNav.includes("search") || lowerNav.includes("find")) {
+                launchProcess("Semantic Search", <SemanticSearchApp />);
+                setInput("");
+                return;
+            }
+            if (lowerNav.includes("generate") || lowerNav.includes("create") || lowerNav.includes("show me")) {
+                launchProcess("Generative UI", <GenerativeUIApp prompt={input.replace("generate", "").replace("create", "").replace("show me", "").trim()} />);
                 setInput("");
                 return;
             }
