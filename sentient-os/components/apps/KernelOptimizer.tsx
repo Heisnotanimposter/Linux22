@@ -7,10 +7,10 @@ import { Zap, Cpu, Terminal, Gauge, Code2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const OPTIMIZATION_MODULES = [
-    { id: "net", name: "Network Stack", lang: "Rust", gain: "+40% Throughput" },
-    { id: "gpu", name: "Render Pipeline", lang: "C++", gain: "-2ms Latency" },
-    { id: "mem", name: "Memory Allocator", lang: "ASM", gain: "Zero-GC Overhead" },
-    { id: "io", name: "NPU Interrupts", lang: "Rust", gain: "Real-time Inference" },
+    { id: "init", name: "Init System (runit)", lang: "C", gain: "O(1) Boot Time" },
+    { id: "kernel", name: "Kernel Config", lang: "Kconfig", gain: "Stripped Drivers" },
+    { id: "lto", name: "Link Time Opt", lang: "Clang", gain: "-15% Binary Size" },
+    { id: "fs", name: "Vector FS", lang: "Rust", gain: "Zero-Copy IO" },
 ];
 
 export const KernelOptimizer = () => {
@@ -18,12 +18,26 @@ export const KernelOptimizer = () => {
     const [compiling, setCompiling] = useState<string | null>(null);
     const [optimizedModules, setOptimizedModules] = useState<string[]>([]);
 
-    const handleOptimize = (id: string, lang: string) => {
+    const handleOptimize = (id: string, name: string) => {
         setCompiling(id);
-        setTimeout(() => {
-            setOptimizedModules(prev => [...prev, id]);
-            setCompiling(null);
-        }, 2000);
+
+        // Simulating a Yocto/Bitbake build process
+        const steps = [
+            `[bitbake] Parsing recipes for ${name}...`,
+            `[compiler] applying -O3 -march=native...`,
+            `[linker] stripping debug symbols...`,
+            `[install] deploying to /boot...`
+        ];
+
+        steps.forEach((step, index) => {
+            setTimeout(() => {
+                // In a real app we'd add these to a log state, but for now we just wait
+                if (index === steps.length - 1) {
+                    setOptimizedModules(prev => [...prev, id]);
+                    setCompiling(null);
+                }
+            }, (index + 1) * 800);
+        });
     };
 
     return (
@@ -68,7 +82,7 @@ export const KernelOptimizer = () => {
                                     <span className="text-slate-500">{mod.gain}</span>
                                     <button
                                         disabled={isOptimized || isCompiling}
-                                        onClick={() => handleOptimize(mod.id, mod.lang)}
+                                        onClick={() => handleOptimize(mod.id, mod.name)}
                                         className={cn(
                                             "px-2 py-1 rounded text-[10px] flex items-center gap-1 transition-all",
                                             isOptimized ? "text-green-400" : "bg-slate-800 hover:bg-orange-500 hover:text-black"
