@@ -1,36 +1,146 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align=center>
+  <a href="https://reactos.org/">
+    <img alt="ReactOS" src="https://reactos.org/wiki/images/0/02/ReactOS_logo.png">
+  </a>
+</p>
 
-## Getting Started
+---
 
-First, run the development server:
+<p align=center>
+  <a href="https://reactos.org/project-news/reactos-0415-released/">
+    <img alt="ReactOS 0.4.15 Release" src="https://img.shields.io/badge/release-0.4.15-0688CB.svg"></a>
+  <a href="https://reactos.org/download/">
+    <img alt="Download ReactOS" src="https://img.shields.io/badge/download-latest-0688CB.svg"></a>
+  <a href="https://sourceforge.net/projects/reactos/">
+    <img alt="SourceForge Download" src="https://img.shields.io/sourceforge/dm/reactos.svg?colorB=0688CB"></a>
+  <a href="https://github.com/reactos/reactos/blob/master/COPYING">
+    <img alt="License" src="https://img.shields.io/badge/license-GNU_GPL_2.0-0688CB.svg"></a>
+  <a href="https://reactos.org/donate/">
+    <img alt="Donate" src="https://img.shields.io/badge/%24-donate-E44E4A.svg"></a>
+  <a href="https://twitter.com/reactos">
+    <img alt="Follow on Twitter" src="https://img.shields.io/twitter/follow/reactos.svg?style=social&label=Follow%20%40reactos"></a>
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Quick Links
+[Website](https://reactos.org/) &bull;
+[Official chat](https://chat.reactos.org/) &bull;
+[Wiki](https://reactos.org/wiki/) &bull;
+[Forum](https://reactos.org/forum/) &bull;
+[Community Discord](https://discord.gg/7knjvhT) &bull;
+[JIRA Bug Tracker](https://jira.reactos.org/issues/) &bull;
+[ReactOS Git mirror](https://git.reactos.org/) &bull;
+[Testman](https://reactos.org/testman/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What is ReactOS?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+ReactOS™ is an Open Source effort to develop a quality operating system that is compatible with applications and drivers written for the Microsoft® Windows™ NT family of operating systems (NT4, 2000, XP, 2003, Vista, 7).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The ReactOS project, although currently focused on Windows Server 2003 compatibility, is always keeping an eye toward compatibility with Windows Vista and future Windows NT releases.
 
-## Learn More
+The code of ReactOS is licensed under [GNU GPL 2.0](https://github.com/reactos/reactos/blob/master/COPYING).
 
-To learn more about Next.js, take a look at the following resources:
+### Product quality warning
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**ReactOS is currently an Alpha quality operating system.** This means that ReactOS is under heavy development and you have to be ready to encounter some problems. Different things may not work well and it can corrupt the data present on your hard disk. It is HIGHLY recommended to test ReactOS on a virtual machine or on a computer with no sensitive or critical data!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Building
 
-## Deploy on Vercel
+![Build](https://github.com/reactos/reactos/workflows/Build/badge.svg) [![rosbewin.badge]][rosbewin.link] [![rosbeunix.badge]][rosbeunix.link] [![coverity.badge]][coverity.link]
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To build the system it is strongly advised to use the _ReactOS Build Environment (RosBE)._
+Up-to-date versions for Windows and for Unix/GNU-Linux are available from our download page at: ["Build Environment"](https://reactos.org/wiki/Build_Environment).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Alternatively one can use Microsoft Visual C++ (MSVC) version 2019+. Building with MSVC is covered here: ["Visual Studio or Microsoft Visual C++"](https://reactos.org/wiki/CMake#Visual_Studio_or_Microsoft_Visual_C.2B.2B).
+
+See ["Building ReactOS"](https://reactos.org/wiki/Building_ReactOS) article for more details.
+
+### Binaries
+
+To build ReactOS you must run the `configure` script in the directory you want to have your build files. Choose `configure.cmd` or `configure.sh` depending on your system. Then run `ninja <modulename>` to build a module you want or just `ninja` to build all modules.
+
+### Bootable images
+
+To build a bootable CD image run `ninja bootcd` from the build directory. This will create a CD image with a filename `bootcd.iso`.
+
+You can always download fresh binary builds of bootable images from the ["Daily builds"](https://reactos.org/getbuilds/) page.
+
+## Installing
+
+By default, ReactOS currently can only be installed on a machine that has a FAT16 or FAT32 partition as the active (bootable) partition.
+The partition on which ReactOS is to be installed (which may or may not be the bootable partition) must also be formatted as FAT16 or FAT32.
+ReactOS Setup can format the partitions if needed.
+
+Starting with 0.4.10, ReactOS can be installed using the BtrFS file system. But consider this as an experimental feature and thus regressions not triggered on FAT setup may be observed.
+
+To install ReactOS from the bootable CD distribution, extract the archive contents. Then burn the CD image, boot from it, and follow the instructions.
+
+See ["Installing ReactOS"](https://reactos.org/wiki/Installing_ReactOS) Wiki page or [INSTALL](INSTALL) for more details.
+
+## Testing
+
+If you discover a bug in ReactOS search on JIRA first - it might be reported already. If not report the bug providing logs and as much information as possible.
+
+See ["File Bugs"](https://reactos.org/wiki/File_Bugs) for a guide.
+
+__NOTE:__ The bug tracker is _not_ for discussions. Please use our [official chat](https://chat.reactos.org/) or our [forum](https://reactos.org/forum/).
+
+## Contributing  [![prwelcome.badge]](https://reactos.org/wiki/Commiting_Changes)
+
+We are always looking for developers! Check [how to contribute](CONTRIBUTING.md) if you are willing to participate.
+
+__Legal notice__: If you have seen proprietary Microsoft Windows source code (including but not limited to the leaked Windows NT 3.5, NT 4, 2000 source code and the Windows Research Kernel), your contribution won't be accepted because of potential copyright violation.
+
+Try out cloud-based ReactOS development using Gitpod and Docker:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/reactos/reactos)
+
+You can also support ReactOS by [donating](https://reactos.org/donate/)! We rely on our backers to maintain our servers and accelerate development by [hiring full-time devs](https://reactos.org/contributing/#paid-jobs).
+
+## Project Integration
+
+This project is a hybrid of multiple disparate repositories (e.g., ReactOS and Sentient OS Components). To maintain system integrity during merges:
+
+- **Merging Strategy**: Use the `--allow-unrelated-histories` flag when integrating new external repositories.
+- **Alignment Standard**: After merging, follow our [Project Merge and Alignment Workflow](file:///Users/seungwonlee/Linux22/sentient-os/.agent/workflows/project-merge-alignment.md) to manually resolve conflicts and normalize the codebase structure.
+- **Continuous Alignment**: Frequently use feature branches to prevent future collisions between the core kernel and the AI management shell.
+
+## Documentation Standards
+
+This project follows the **Documentation as Code** philosophy. All documentation is version-controlled using Git to maintain a transparent and collaborative history.
+
+- **Format**: Markdown (.md) is the preferred format for all documentation and project artifacts.
+- **Revision Control**: Use clear, descriptive commit messages for all documentation changes.
+- **Workflow**: See our [Git Document Revision Workflow](file:///Users/seungwonlee/Linux22/sentient-os/.agent/workflows/git-document-revision.md) for detailed steps on staging, committing, and tagging documentation releases.
+
+## More information
+
+ReactOS is a Free and Open Source operating system based on the Windows architecture,
+providing support for existing applications and drivers, and an alternative to the current dominant consumer operating system.
+
+It is not another wrapper built on Linux, like WINE. It does not attempt or plan to compete with WINE; in fact, the user-mode part of ReactOS is almost entirely WINE-based and our two teams have cooperated closely in the past.
+
+ReactOS is also not "yet another OS". It does not attempt to be a third player like any other alternative OS out there. People are not meant to uninstall Linux and use ReactOS instead; ReactOS is a replacement for Windows users who want a Windows replacement that behaves just like Windows.
+
+More information is available at: [reactos.org](https://reactos.org/).
+
+Also see the [media/doc](/media/doc/) subdirectory for some sparse notes.
+
+## Who is responsible
+
+Active devs are listed as members of [GitHub organization](https://github.com/orgs/reactos/people).
+See also the [CREDITS](CREDITS) file for others.
+
+## Code mirrors
+
+The main development is done on [GitHub](https://github.com/reactos/reactos). We have an [alternative mirror](https://git.reactos.org/?p=reactos.git) in case GitHub is down.
+
+There is also an obsolete [SVN archive repository](https://svn.reactos.org/reactos/) that is kept for historical purposes.
+
+[coverity.badge]:   https://scan.coverity.com/projects/205/badge.svg?flat=1
+[rosbewin.badge]:   https://img.shields.io/badge/RosBE_Windows-2.2.1-0688CB.svg
+[rosbeunix.badge]:  https://img.shields.io/badge/RosBE_Unix-2.2.1-0688CB.svg
+[prwelcome.badge]:  https://img.shields.io/badge/PR-welcome-0688CB.svg
+
+[coverity.link]:    https://scan.coverity.com/projects/205
+[rosbewin.link]:    https://sourceforge.net/projects/reactos/files/RosBE-Windows/i386/2.2.1/
+[rosbeunix.link]:   https://sourceforge.net/projects/reactos/files/RosBE-Unix/2.2.1/
