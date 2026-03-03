@@ -1,0 +1,3 @@
+module.exports=[38922,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(98145);a.n(d("[project]/Linux22/sentient-os/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},62993,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(98145);a.n(d("[project]/Linux22/sentient-os/node_modules/next/dist/client/components/builtin/global-error.js"))},60149,a=>{"use strict";a.i(38922);var b=a.i(62993);a.n(b)}];
+
+//# sourceMappingURL=a35a8_next_dist_client_components_builtin_global-error_c3b6710c.js.map

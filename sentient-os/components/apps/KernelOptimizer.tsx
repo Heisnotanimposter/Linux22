@@ -7,10 +7,10 @@ import { Zap, Cpu, Terminal, Gauge, Code2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const OPTIMIZATION_MODULES = [
-    { id: "init", name: "Init System (runit)", lang: "C", gain: "O(1) Boot Time" },
-    { id: "kernel", name: "Kernel Config", lang: "Kconfig", gain: "Stripped Drivers" },
+    { id: "boot", name: "Bootloader (GRUB)", lang: "ASM", gain: "Fast Pro-Mode Switch" },
+    { id: "tsx", name: "TSX Native Runtime", lang: "Deno", gain: "Browserless UI" },
+    { id: "rust_drv", name: "NPU Driver (Rust)", lang: "Rust", gain: "Memory Safe IO" },
     { id: "lto", name: "Link Time Opt", lang: "Clang", gain: "-15% Binary Size" },
-    { id: "fs", name: "Vector FS", lang: "Rust", gain: "Zero-Copy IO" },
 ];
 
 export const KernelOptimizer = () => {
