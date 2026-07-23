@@ -51,10 +51,20 @@ void simulate(int frames, const char *algorithm) {
 
     FILE *fp = fopen("access.list", "r");
     if (!fp) {
+        fp = fopen("Access/access.list", "r");
+    }
+    if (!fp) {
+        fp = fopen("Access/access-20240606T115731Z-001/access/access.list", "r");
+    }
+    if (!fp) {
+        fp = fopen("access-20240606T115731Z-001/access/access.list", "r");
+    }
+    if (!fp) {
         perror("Error opening access.list");
         free(pageTable);
         exit(1); 
     }
+
 
     // Read and process page accesses from the file
     while (fgets(lineBuffer, sizeof(lineBuffer), fp) != NULL) { // Read a line from the file
@@ -95,7 +105,8 @@ void simulate(int frames, const char *algorithm) {
             }
 
             // Replace victim page
-            pageTable[victimIndex] = (Page){page, true, operation == 'W'}; // Add the new page to the page table
+            pageTable[victimIndex] = (Page){page, true, operation == 'W', isFIFO ? 0 : totalAccesses}; // Add the new page to the page table
+
             
             // Update lastUsed for NRU (only when there's a page fault or a hit for NRU)
             if (!isFIFO) {
@@ -105,21 +116,69 @@ void simulate(int frames, const char *algorithm) {
             } 
         }
 
-        printf("Access %d: Page %d, Operation %c\n", totalAccesses, page, operation); // Add this line for debugging
         lineNumber++;
     }
 
-    //Check for errors besides reaching EOF
+    // Check for errors besides reaching EOF
     if (!feof(fp)) { 
         perror("Error reading from access.list");
         free(pageTable);
         exit(1); 
     }
 
-    printf("Finished reading access.list\n");
-
     fclose(fp);
     free(pageTable);
 
     printResults(totalAccesses, totalReads, totalWrites, pageFaults);
 }
+
+// Function to find victim page for FIFO algorithm
+int findVictimPageFIFO(int frames, int *currentFrame) {
+    int victimIndex = *currentFrame;
+    *currentFrame = (*currentFrame + 1) % frames; // Cycle to the next frame in the circular queue
+    return victimIndex;
+}
+
+// Function to find victim page for NRU algorithm
+int findVictimPageNRU(Page *pageTable, int frames, int currentAccess) {
+    (void)currentAccess; // Parameter reserved for potential aging extensions
+    int victimIndex = 0;
+    int victimClass = 3; // Start with the highest class (3)
+
+    // Find the lowest class page (0, 1, 2, or 3)
+    for (int i = 0; i < frames; i++) {
+        int currentClass = (pageTable[i].referenced << 1) | pageTable[i].modified;
+
+        // If a lower class is found, update the victim
+        if (currentClass < victimClass) {
+            victimIndex = i;
+            victimClass = currentClass;
+        } else if (currentClass == victimClass) {
+            // If in the same class, use LRU (Least Recently Used)
+            if (pageTable[i].lastUsed < pageTable[victimIndex].lastUsed) {
+                victimIndex = i;
+            }
+        }
+    }
+    
+    pageTable[victimIndex].referenced = false; 
+    pageTable[victimIndex].modified = false; 
+    return victimIndex; 
+}
+
+// Function to print simulation results
+void printResults(int totalAccesses, int totalReads, int totalWrites, int pageFaults) {
+    printf("==========================================\n");
+    printf(" Virtual Memory Simulation Results\n");
+    printf("==========================================\n");
+    printf("Total Page Accesses : %d\n", totalAccesses);
+    printf("Total Memory Reads  : %d\n", totalReads);
+    printf("Total Memory Writes : %d\n", totalWrites);
+    printf("Total Page Faults   : %d\n", pageFaults);
+    if (totalAccesses > 0) {
+        printf("Page Fault Rate     : %d/%d = %.2f%%\n", pageFaults, totalAccesses,
+               100.0 * pageFaults / totalAccesses); 
+    }
+    printf("==========================================\n");
+}
+
