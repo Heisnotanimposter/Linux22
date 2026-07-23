@@ -13,7 +13,7 @@ import { KernelOptimizer } from "@/components/apps/KernelOptimizer";
 import { ServerManager } from "@/components/apps/ServerManager";
 import { SemanticSearchApp } from "@/components/apps/SemanticSearch";
 import { GenerativeUIApp } from "@/components/apps/GenerativeUIApp";
-import { aios } from "@/system/ai_kernel";
+import { cck } from "@/system/cck_engine";
 
 export const Membrane = () => {
     const { booted, isLoggedIn, isSleeping, isRebooting, performanceMode, processes, closeProcess, focusProcess, activeProcessId, wake } = useKernel();
@@ -182,12 +182,11 @@ const SynapseInput = () => {
                 return;
             }
 
-            // AIOS Kernel Integration (Layer 2)
-            // Instead of direct kernel handling, we route through the Agent OS Kernel
-            aios.processIntent(input).then((response) => {
-                // For now, simpler notification. In a real system, this would pipe to a Notification Agent
-                console.log("AIOS Response:", response);
-                // Fallback to old handler for UI feedback if needed, or implement a Kernel Log Viewer
+            // CCK Intent Routing (Layer 2)
+            // Instead of standard AIOS, we use the Create Core Kernel
+            cck.handleRequest(input).then(({ response, model }) => {
+                console.log(`[CCK] Inference routed to: ${model}`);
+                console.log(`[CCK] Response: ${response}`);
                 handleAssistantRequest(input);
             });
             setInput("");

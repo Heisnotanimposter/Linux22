@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 // Mock Data for "Agents"
 const AGENTS = [
     { id: "A-01", name: "Architect", status: "active", task: "Optimizing DOM structure..." },
-    { id: "A-02", name: "Stylist", status: "idle", task: "Waiting for context..." },
-    { id: "A-03", name: "LogicCore", status: "processing", task: "Calculating state vectors..." },
+    { id: "A-02", name: "KernelDrive", status: "processing", task: "Analyzing ntoskrnl/ke/wait.c..." },
+    { id: "A-03", name: "LTM-Sync", status: "idle", task: "Summarizing context bank..." },
 ];
 
 export const AgentMonitor = () => {

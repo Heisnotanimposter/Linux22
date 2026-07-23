@@ -30,10 +30,12 @@ export class MockVectorDB {
     constructor() {
         // Initialize with some dummy data
         this.addFile("project_roadmap.pdf", "The strategic plan for Q4 2025 focusing on AI expansion.", ["strategy", "planning", "future"]);
-        this.addFile("q3_financials.xlsx", "Revenue report showing 40% growth in cloud sector.", ["money", "finance", "profit", "growth"]);
-        this.addFile("main.py", "Entry point for the FastAPI backend server.", ["code", "python", "server", "backend"]);
-        this.addFile("vacation_photos.zip", "Photos from the trip to Kyoto.", ["personal", "travel", "memory"]);
         this.addFile("security_audit.log", "Logs showing zero critical vulnerabilities found.", ["security", "audit", "safety"]);
+
+        // --- ReactOS Native Indexing ---
+        this.addFile("ntoskrnl/ke/wait.c", "Implements dispatcher wait functions for the ReactOS kernel.", ["kernel", "scheduler", "wait", "ntoskrnl"]);
+        this.addFile("ntoskrnl/mm/virtual.c", "Virtual memory management and address space implementation.", ["kernel", "memory", "mm", "ntoskrnl"]);
+        this.addFile("sdk/include/psdk/ntstatus.h", "Definition of NT status codes for system calls.", ["sdk", "header", "ntstatus", "api"]);
     }
 
     addFile(name: string, content: string, tags: string[]) {

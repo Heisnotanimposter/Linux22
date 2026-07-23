@@ -1,6 +1,6 @@
 import { Process } from "./kernel";
 
-type AgentAction = "open_app" | "create_file" | "optimize_system" | "scan_security";
+type AgentAction = "open_app" | "create_file" | "optimize_system" | "scan_security" | "analyze_kernel" | "rebuild_subsystem";
 
 interface AgentPlan {
     goal: string;
@@ -29,6 +29,13 @@ export const orchestrator = {
             };
         }
 
+        if (lowerInput.includes("kernel") || lowerInput.includes("reactos")) {
+            return {
+                goal: "Kernel Self-Maintenance",
+                steps: ["analyze_kernel", "scan_security"]
+            };
+        }
+
         return {
             goal: "General Task",
             steps: ["open_app"]
@@ -42,6 +49,8 @@ export const orchestrator = {
             case "scan_security": return "Verifying Neural Code Integrity...";
             case "open_app": return "Launching requested application...";
             case "create_file": return "Generating context-aware document...";
+            case "analyze_kernel": return "Cross-referencing ntoskrnl headers with runtime state...";
+            case "rebuild_subsystem": return "Triggering Ninja build for target subsystem...";
             default: return "Executing unknown protocol...";
         }
     }
